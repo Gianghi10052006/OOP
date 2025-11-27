@@ -20,6 +20,7 @@ public class Main {
         menu.addItem("Sap xep theo ten");
         menu.addItem("Sap xep theo ten va thoi luong");
         menu.addItem("Them bai hat moi");
+        menu.addItem("Sua Bai hat");        
         menu.addItem("Xoa Bai hat");
         menu.addItem("Thoat");
         
@@ -39,50 +40,15 @@ public class Main {
                     baihatList.sapXepTheoTenVaThoiLuong();
                     baihatList.output();
                 }
-                
                 case 4 -> {
-                    
+                    baihatList.them();
                 }
                 case 5 -> {
-
+                    baihatList.sua();
                 }
-                
                 case 6 -> {
-
+                    baihatList.xoa();
                 }
-                
-                case 7 -> {
-
-                }
-                
-                case 8 -> {
-                    System.out.print("\nNhap ten file de doc (VD: data.txt): ");
-                    String tenFile = sc.nextLine();
-                    baihatList.nhapTuFile(tenFile);
-                    baihatList.output();
-                }
-                
-                case 9 -> {
-                    System.out.print("\nNhap ten file de ghi (VD: data.txt): ");
-                    String tenFile = sc.nextLine();
-                    baihatList.xuatRaFile(tenFile);
-                }
-                
-                case 10 -> {
-                    System.out.println("\n=== DANH SACH BAI HAT YEU THICH ===");
-                    System.out.printf("%-10s %-30s %-12s %-12s %-10s%n", 
-                         "Ma BH", "Ten Bai Hat", "Thoi Luong", "Yeu Thich", "The Loai");
-                    System.out.println("------------------------------------------------------------------------");
-                    boolean found = false;
-                    for (BaiHat bh : baihatList) {
-                        if (bh.yeuThich) {
-                            bh.output();
-                            found = true;
-                        }
-                    }
-                    if (!found) System.out.println("Khong co bai hat yeu thich nao.");
-                }
-                
                 default -> {
                     Menu.sayBye();
                     return;
