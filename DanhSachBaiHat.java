@@ -5,11 +5,8 @@
 package com.mycompany._hoangngocgianghi;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,6 +54,91 @@ public class DanhSachBaiHat extends ArrayList<BaiHat> {
         });
         System.out.println("\n>>> Da sap xep theo ten va thoi luong!");
     }
+    
+// 4. Them bai hat moi (Khong tham so)
+    public void them() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n--- THEM BAI HAT MOI ---");
+        try {
+            System.out.print("Nhap ma bai hat: ");
+            int ma = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Nhap ten bai hat: ");
+            String ten = sc.nextLine();
+
+            System.out.print("Nhap thoi luong: ");
+            double thoiLuong = Double.parseDouble(sc.nextLine());
+
+            System.out.print("Yeu thich (true/false): ");
+            boolean yeuThich = Boolean.parseBoolean(sc.nextLine());
+
+            System.out.print("The loai (1 ky tu): ");
+            char theLoai = sc.nextLine().charAt(0);
+
+            BaiHat bhMoi = new BaiHat(ma, ten, thoiLuong, yeuThich, theLoai);
+            this.add(bhMoi);
+            System.out.println(">>> Da them moi thanh cong!");
+        } catch (Exception e) {
+            System.out.println("Loi nhap lieu! Vui long thu lai.");
+        }
+    }
+
+    // 5. Sua bai hat (Khong tham so)
+    public void sua() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nNhap MA bai hat can sua: ");
+        try {
+            int maTimKiem = Integer.parseInt(sc.nextLine());
+            boolean timThay = false;
+            
+            for (BaiHat bh : this) {
+                if (bh.maBaiHat == maTimKiem) {
+                    System.out.println("Tim thay: " + bh.tenBaiHat);
+                    System.out.print("Nhap ten moi: ");
+                    bh.tenBaiHat = sc.nextLine();
+                    
+                    System.out.print("Nhap thoi luong moi: ");
+                    bh.thoiLuong = Double.parseDouble(sc.nextLine());
+                    
+                    System.out.print("Yeu thich (true/false): ");
+                    bh.yeuThich = Boolean.parseBoolean(sc.nextLine());
+                    
+                    System.out.println(">>> Da cap nhat xong!");
+                    timThay = true;
+                    break;
+                }
+            }
+            if (!timThay) System.out.println("Khong tim thay ma: " + maTimKiem);
+        } catch (Exception e) {
+            System.out.println("Nhap sai dinh dang!");
+        }
+    }
+
+    // 6. Xoa bai hat (Khong tham so)
+    public void xoa() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nNhap MA bai hat can xoa: ");
+        try {
+            int maXoa = Integer.parseInt(sc.nextLine());
+            BaiHat canXoa = null;
+            
+            for (BaiHat bh : this) {
+                if (bh.maBaiHat == maXoa) {
+                    canXoa = bh;
+                    break;
+                }
+            }
+            
+            if (canXoa != null) {
+                this.remove(canXoa);
+                System.out.println(">>> Da xoa bai hat ma " + maXoa);
+            } else {
+                System.out.println("Khong tim thay bai hat de xoa!");
+            }
+        } catch (Exception e) {
+            System.out.println("Nhap sai dinh dang!");
+        }
+    }
 
     // 8. Import bai hat tu file 
     public void nhapTuFile(String fileName) {
@@ -77,24 +159,6 @@ public class DanhSachBaiHat extends ArrayList<BaiHat> {
             fr.close();
         } catch (Exception e) {
             System.out.println(e);
-        }
-    }
-    
-    public void xuatRaFile(String tenFile) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
-            for (BaiHat baihat : this) {
-                // Format: maBaiHat,tenBaiHat,thoiLuong,yeuThich,theLoai
-                String dong = baihat.maBaiHat + "," +
-                             baihat.tenBaiHat + "," +
-                             baihat.thoiLuong + "," +
-                             baihat.yeuThich + "," +
-                             baihat.theLoai;
-                bw.write(dong);
-                bw.newLine();
-            }
-            System.out.println("\n>>> Export thanh cong " + this.size() + " bai hat ra file: " + tenFile);
-        } catch (IOException e) {
-            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 } 
